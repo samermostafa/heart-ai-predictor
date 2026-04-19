@@ -12,20 +12,35 @@ print(df.isnull().sum())
 if 'Unnamed: 0' in df.columns:
     df = df.drop(columns=['Unnamed: 0'])
 
-if 'ChestPain' in df.columns and df['ChestPain'].dtype == 'object':
-    df['ChestPain'] = df['ChestPain'].astype("category").cat.codes
-
-if 'Thal' in df.columns and df['Thal'].dtype == 'object':
-    df['Thal'] = df['Thal'].astype("category").cat.codes
-
-if 'AHD' in df.columns and df['AHD'].dtype == 'object':
-    df['AHD'] = df['AHD'].astype("category").cat.codes
-
 for col in df.columns:
     if df[col].dtype == 'object':
         df[col] = df[col].fillna(df[col].mode()[0])
     else:
         df[col] = df[col].fillna(df[col].median())
+
+
+chestpain_mapping = {
+    "typical": 0,
+    "nontypical": 1,
+    "nonanginal": 2,
+    "asymptomatic": 3
+}
+
+thal_mapping = {
+    "normal": 0,
+    "fixed": 1,
+    "reversable": 2
+}
+
+ahd_mapping = {
+    "No": 0,
+    "Yes": 1
+}
+
+df["ChestPain"] = df["ChestPain"].map(chestpain_mapping)
+df["Thal"] = df["Thal"].map(thal_mapping)
+df["AHD"] = df["AHD"].map(ahd_mapping)
+
 
 print("\nMissing values after cleaning:\n")
 print(df.isnull().sum())
