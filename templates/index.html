@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Disease Prediction</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="page-bg">
+        <div class="ecg-layer">
+            <div class="ecg-line"></div>
+            <div class="ecg-line ecg-line-2"></div>
+        </div>
+
+        <div class="grid-layer"></div>
+
+        <div class="glow glow-1"></div>
+        <div class="glow glow-2"></div>
+        <div class="glow glow-3"></div>
+    </div>
+
+    <div class="main-content">
+        <div class="navbar">
+            <h2>❤️ Heart AI Predictor</h2>
+        </div>
+
+        <div class="hero">
+            <div class="hero-text">
+                <h1>Don't Let Your Health Take a Backseat</h1>
+                <p>AI-powered heart disease prediction system</p>
+            </div>
+
+            <div class="hero-image">
+                <img src="{{ url_for('static', filename='images/heart.png') }}" alt="Heart">
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="card">
+
+                <h1>Heart Disease Prediction</h1>
+                <p class="subtitle">
+                    Enter patient data to analyze heart disease risk using Machine Learning
+                </p>
+
+                <form method="POST" class="grid">
+
+                    <input type="number" name="Age" placeholder="Age" required>
+
+                    <select name="Sex" required>
+                        <option value="" disabled selected>Select Sex</option>
+                        <option value="1">Male</option>
+                        <option value="0">Female</option>
+                    </select>
+
+                    <select name="ChestPain" required>
+                        <option value="" disabled selected>Chest Pain Type</option>
+                        <option value="0">Typical Angina</option>
+                        <option value="1">Atypical Angina</option>
+                        <option value="2">Non-anginal Pain</option>
+                        <option value="3">Asymptomatic</option>
+                    </select>
+
+                    <input type="number" name="RestBP" placeholder="Rest Blood Pressure" required>
+
+                    <input type="number" name="Chol" placeholder="Cholesterol" required>
+
+                    <select name="Fbs" required>
+                        <option value="" disabled selected>Fasting Blood Sugar</option>
+                        <option value="1">> 120 mg/dl</option>
+                        <option value="0"><= 120 mg/dl</option>
+                    </select>
+
+                    <input type="number" name="RestECG" placeholder="Rest ECG" required>
+
+                    <input type="number" name="MaxHR" placeholder="Max Heart Rate" required>
+
+                    <select name="ExAng" required>
+                        <option value="" disabled selected>Exercise Angina</option>
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+
+                    <input type="number" step="any" name="Oldpeak" placeholder="Oldpeak" required>
+
+                    <input type="number" name="Slope" placeholder="Slope" required>
+
+                    <input type="number" name="Ca" placeholder="Ca" required>
+
+                    <select name="Thal" required>
+                        <option value="" disabled selected>Thalassemia</option>
+                        <option value="0">Normal</option>
+                        <option value="1">Fixed Defect</option>
+                        <option value="2">Reversible Defect</option>
+                    </select>
+
+                    <button type="submit">Predict</button>
+                </form>
+
+                {% if result %}
+<div id="resultSection" class="result {% if 'No' in result %}good{% else %}bad{% endif %}">
+    <h3>{{ result }}</h3>
+    {% if confidence is not none %}
+        <p>Confidence: {{ confidence }}%</p>
+    {% endif %}
+</div>
+{% endif %}
+<script>
+    window.onload = function () {
+        var result = document.getElementById("resultSection");
+        if (result) {
+            result.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+    };
+</script>
+
+                
+
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>
+            Powered by Flask & Machine Learning |
+            <strong>Developed by Samer Qunoo</strong>
+        </p>
+    </div>
+
+</body>
+</html>
